@@ -19,7 +19,16 @@ class TestGame < Minitest::Test
     @game.place(1, 2)
     @game.place(0, 1)
 
-    assert_equal "O|XX  OO   ", @game.save
+    assert_equal "O|XX--OO---", @game.save
+  end
+
+  def test_show
+    @game.place(1, 1)
+    @game.place(0, 0)
+
+    assert_equal 'O', @game.show_at(1,1)
+    assert_equal '-', @game.show_at(1,0)
+    assert_equal 'X', @game.show_at(0,0)
   end
 
   def test_load
@@ -28,9 +37,9 @@ class TestGame < Minitest::Test
     @game.place(1, 2)
     @game.place(0, 1)
 
-    assert_equal "O|XX  OO   ", @game.save
+    assert_equal "O|XX--OO---", @game.save
 
-    game2 = Game.load("O|XX  OO   ")
+    game2 = Game.load("O|XX--OO---")
 
     assert_equal 1, game2.next
     assert_equal 1, game2.at(1,1)

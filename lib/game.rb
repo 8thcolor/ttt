@@ -1,6 +1,7 @@
 class Game
   LINES = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]
-  
+  UI = ['-', 'O', 'X']
+
   def initialize(next_player)
     @grid = [[0,0,0],[0,0,0],[0,0,0]]
     @next = next_player
@@ -21,24 +22,35 @@ class Game
     grid_string = data[2..-1]
     (0..2).each do |x|
       (0..2).each do |y|
-        game.board[x][y] = (grid_string[x*3+y] == "O") ? 1 : -1
+        if(grid_string[x*3+y] == "O")
+          game.board[x][y] = 1
+        elsif (grid_string[x*3+y] == "X")
+          game.board[x][y] =  -1
+        else
+          game.board[x][y] = 0
+        end
       end
     end
 
     game
   end
 
+  def show_at(x, y)
+    UI[@grid[x][y]]
+  end
+
+  def to_s
+    save
+  end
+
   def save
     data = (@next == 1) ? "O|" : "X|"
-    @grid.flatten.each do |e| 
-      if (e == 1)
-        data << "O"
-      elsif (e == -1)
-        data << "X"
-      else
-        data << " "
+    (0..2).each do |x|
+      (0..2).each do |y|
+          data << show_at(x,y)
       end
     end
+    
     data
   end
 

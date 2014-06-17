@@ -1,0 +1,10 @@
+
+<table>
+<% (0..2).each do |x| %>
+<tr>
+  <% (0..2).each do |y| %>
+    <td><%= show_cell(x,y,game.show_at(x,y)) %></td>
+  <% end %>
+</tr>
+<% end %>
+</table>
