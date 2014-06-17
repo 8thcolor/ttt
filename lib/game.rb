@@ -14,6 +14,34 @@ class Game
     @next *= -1
   end
 
+  def self.load(data)
+    next_p = (data[0] == "O") ? 1 : -1
+    game = Game.new(next_p)
+
+    grid_string = data[2..-1]
+    (0..2).each do |x|
+      (0..2).each do |y|
+        game.board[x][y] = (grid_string[x*3+y] == "O") ? 1 : -1
+      end
+    end
+
+    game
+  end
+
+  def save
+    data = (@next == 1) ? "O|" : "X|"
+    @grid.flatten.each do |e| 
+      if (e == 1)
+        data << "O"
+      elsif (e == -1)
+        data << "X"
+      else
+        data << " "
+      end
+    end
+    data
+  end
+
   def next
     @next
   end
